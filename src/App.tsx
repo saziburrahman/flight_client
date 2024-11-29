@@ -4,8 +4,8 @@ import { READER_API } from "./api";
 
 function App() {
   const query = useQuery({
-    queryKey: ["data"],
-    queryFn: () => READER_API.getReader(),
+    queryKey: ["getReader"],
+    queryFn: ()=> READER_API.getReader(),
   });
   console.log(query.data);
 

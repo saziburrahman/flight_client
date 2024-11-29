@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
-const JWT_TOKEN = import.meta.env.JWT_TOKEN_KEY || "_token";
-const REFRESH_TOKEN = import.meta.env.REFRESH_TOKEN || "refresh_token";
+const JWT_TOKEN = import.meta.env.VITE_JWT_TOKEN_KEY || "_token";
+const VITE_REFRESH_TOKEN = import.meta.env.VITE_REFRESH_TOKEN || "VITE_REFRESH_TOKEN";
 
 export function getJWTToken(): string {
   return Cookies.get(JWT_TOKEN) ?? "";
@@ -15,5 +15,5 @@ export function getAuthorizationHeader() {
 }
 
 export function getRefreshToken(): string {
-  return Cookies.get(REFRESH_TOKEN) ?? "";
+  return Cookies.get(VITE_REFRESH_TOKEN) ?? "";
 }

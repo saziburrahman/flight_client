@@ -3,9 +3,9 @@ import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AUTH_API } from "../api";
 
-const JWT_TOKEN_KEY = import.meta.env.JWT_TOKEN_KEY || "";
-const AUTH_USER_KEY = import.meta.env.AUTH_USER_KEY || "";
-const USER_TYPE = import.meta.env.AUTH_USER_TYPE || "";
+const VITE_JWT_TOKEN_KEY = import.meta.env.VITE_JWT_TOKEN_KEY || "";
+const VITE_AUTH_USER_KEY = import.meta.env.VITE_AUTH_USER_KEY || "";
+const USER_TYPE = import.meta.env.VITE_AUTH_USER_TYPE || "";
 
 // initial state
 const initialState: IAuthContext = {
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       type: USER_TYPE,
     });
     if (response && response?.type.includes(USER_TYPE)) {
-      Cookies.set(JWT_TOKEN_KEY, response?.token);
+      Cookies.set(VITE_JWT_TOKEN_KEY, response?.token);
       await refreshAuth();
       window.location.reload();
     }
@@ -45,7 +45,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const response = await AUTH_API.login({ mobileNumber, password });
 
     if (response && response?.token) {
-      Cookies.set(JWT_TOKEN_KEY, response?.token);
+      Cookies.set(VITE_JWT_TOKEN_KEY, response?.token);
       await refreshAuth();
     }
     setIsLoading(false);
@@ -55,13 +55,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // logout
   const logout = () => {
     setAuth(undefined);
-    Cookies.remove(AUTH_USER_KEY);
+    Cookies.remove(VITE_AUTH_USER_KEY);
     window.location.reload();
   };
 
   // updateAuth
   const updateAuth = (newAuth: IAuth) => {
-    Cookies.set(AUTH_USER_KEY, JSON.stringify(newAuth));
+    Cookies.set(VITE_AUTH_USER_KEY, JSON.stringify(newAuth));
     setAuth(newAuth);
   };
 
@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       };
       if (user.type.includes(USER_TYPE)) {
         setAuth(user);
-        Cookies.set(AUTH_USER_KEY, JSON.stringify(user));
+        Cookies.set(VITE_AUTH_USER_KEY, JSON.stringify(user));
       } else {
         toast.error("Invalid User Type");
       }
@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    const currentUser = Cookies.get(AUTH_USER_KEY);
+    const currentUser = Cookies.get(VITE_AUTH_USER_KEY);
     if (currentUser) {
       const _auth = JSON.parse(currentUser) as IAuth;
       setAuth(_auth);
