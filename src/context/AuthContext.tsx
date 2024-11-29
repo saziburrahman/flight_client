@@ -41,8 +41,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // login
-  const login = async (mobileNumber: string, password: string) => {
-    const response = await AUTH_API.login({ mobileNumber, password });
+  const login = async (body:object) => {
+    const response = await AUTH_API.login(body);
 
     if (response && response?.token) {
       Cookies.set(VITE_JWT_TOKEN_KEY, response?.token);

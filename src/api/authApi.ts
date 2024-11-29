@@ -7,7 +7,9 @@ export async function registration(body: object) {
 }
 
 export async function login(body: object) {
-  return await Friday.post(new URL(`${VITE_AUTH_BASE_URL}/login`), { body });
+  console.log("called",body);
+  
+  return await Friday.post(new URL(`${VITE_AUTH_BASE_URL}/auth/login`), { body });
 }
 
 export async function getProfile() {
