@@ -1,6 +1,36 @@
-import { Link } from "react-router-dom";
+import { FormEvent, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function LoginPage() {
+  const [email, setEmail] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const { login, auth } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const body = {
+      email,
+      password,
+    };
+    await login(body);
+    // console.log(email, password);
+  };
+
+  useEffect(() => {
+    // console.log(auth);
+
+    if (auth) {
+      if (auth?.role === "Admin") {
+        navigate("/admin");
+      }
+      if (auth?.role === "User") {
+        navigate("/");
+      }
+    }
+  }, [auth, navigate]);
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-gray-50 to-gray-100 flex flex-col justify-center items-center px-4">
       <div className="w-full max-w-md">
@@ -19,13 +49,14 @@ export default function LoginPage() {
                 Log in to your account to continue.
               </p>
             </div>
-            <form className="space-y-6 mt-6">
+            <form className="space-y-6 mt-6" onSubmit={handleSubmit}>
               <div className="relative">
                 <input
                   autoComplete="off"
                   id="email"
                   name="email"
                   type="email"
+                  onChange={(e) => setEmail(e.target.value)}
                   className="peer placeholder-transparent h-12 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-red-500"
                   placeholder="Email address"
                 />
@@ -42,6 +73,7 @@ export default function LoginPage() {
                   id="password"
                   name="password"
                   type="password"
+                  onChange={(e) => setPassword(e.target.value)}
                   className="peer placeholder-transparent h-12 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-red-500"
                   placeholder="Password"
                 />

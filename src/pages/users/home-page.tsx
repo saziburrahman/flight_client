@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import { useSearch } from "../../hooks/useSearch";
 
@@ -16,6 +17,7 @@ const divisions = [
 const airlines = ["Biman Bangladesh", "US-Bangla", "NovoAir"];
 
 export default function HomePage() {
+  const navigate = useNavigate()
   const { updateSearchData } = useSearch();
   const [searchFields, setSearchFields] = useState({
     origin: divisions[0],
@@ -59,7 +61,8 @@ export default function HomePage() {
   const handleSearch = () => {
     if (!validateFields()) return;
     updateSearchData(searchFields);
-    console.log(searchFields);
+    navigate('/flight-search')
+    // console.log(searchFields);
   };
 
   return (

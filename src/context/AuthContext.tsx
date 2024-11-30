@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // login
-  const login = async (body:object) => {
+  const login = async (body: object) => {
     const response = await AUTH_API.login(body);
 
     if (response && response?.token) {
@@ -71,17 +71,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (data) {
       const user: IAuth = {
         ...data,
-        fullName: data?.fullName,
-        mobileNumber: data.mobileNumber,
-        type: data?.type,
+        // fullName: data?.fullName,
+        // mobileNumber: data.mobileNumber,
+        role: data?.role,
         email: data?.email,
       };
-      if (user.type.includes(USER_TYPE)) {
-        setAuth(user);
-        Cookies.set(VITE_AUTH_USER_KEY, JSON.stringify(user));
-      } else {
-        toast.error("Invalid User Type");
-      }
+      setAuth(user);
+      Cookies.set(VITE_AUTH_USER_KEY, JSON.stringify(user));
     } else {
       toast.error("Invalid User");
     }

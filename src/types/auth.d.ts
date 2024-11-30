@@ -9,8 +9,8 @@ interface IAuthContext {
 }
 
 interface IAuth {
-  name: string;
+  username: string;
   email: string;
-  type: string;
+  role: string;
 }
 
