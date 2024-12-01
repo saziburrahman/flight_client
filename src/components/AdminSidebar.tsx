@@ -1,14 +1,22 @@
-import { useState } from 'react';
-import { FaBars, FaCogs, FaHome, FaUsers } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
+import { useState } from "react";
+import {
+  FaBars,
+  FaCalendarCheck,
+  FaHome,
+  FaPlane,
+  FaUsers,
+} from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const menus = [
-    { name: 'Dashboard', path: '/dashboard', icon: <FaHome /> },
-    { name: 'Users', path: '/users', icon: <FaUsers /> },
-    { name: 'Settings', path: '/settings', icon: <FaCogs /> },
+    { name: "Dashboard", path: "/admin/dashboard", icon: <FaHome /> },
+    { name: "Flights", path: "/admin/flights", icon: <FaPlane /> },
+    { name: "Booking", path: "/admin/bookings", icon: <FaCalendarCheck /> },
+    { name: "Users", path: "/users", icon: <FaUsers /> },
+    // { name: 'Settings', path: '/settings', icon: <FaCogs /> },
   ];
 
   return (
@@ -16,7 +24,7 @@ const AdminSidebar = () => {
       {/* Sidebar (with responsive classes) */}
       <div
         className={`fixed top-0 left-0 h-full bg-gray-800 text-white z-50 transform ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
+          isOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 lg:translate-x-0 lg:w-64 w-full md:w-64 md:block`}
       >
         {/* Sidebar Header */}
@@ -32,8 +40,8 @@ const AdminSidebar = () => {
                   className={({ isActive }) =>
                     `flex items-center p-2 rounded-md text-sm font-medium ${
                       isActive
-                        ? 'bg-gray-700 text-blue-400'
-                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                        ? "bg-gray-700 text-blue-400"
+                        : "text-gray-300 hover:bg-gray-700 hover:text-white"
                     }`
                   }
                 >

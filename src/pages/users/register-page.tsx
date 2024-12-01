@@ -1,6 +1,41 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AUTH_API } from "../../api";
 
 export default function RegisterPage() {
+  // State to store input values
+  const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  // Handle input changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submit
+  const handleSubmit = async(e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await AUTH_API.registration(formData)
+      toast.success(" Successfully registered ")
+      navigate("/login")
+    } catch (error) {
+      console.log(error);
+      
+    }
+    console.log(formData);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-red-50 to-gray-100 flex flex-col justify-center items-center px-4">
       <div className="w-full max-w-md">
@@ -15,7 +50,7 @@ export default function RegisterPage() {
                 Join us and start booking your flights today!
               </p>
             </div>
-            <form className="space-y-6 mt-6">
+            <form className="space-y-6 mt-6" onSubmit={handleSubmit}>
               <div className="relative">
                 <input
                   autoComplete="off"
@@ -24,6 +59,8 @@ export default function RegisterPage() {
                   type="text"
                   className="peer placeholder-transparent h-12 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-red-500"
                   placeholder="Username"
+                  value={formData.username}
+                  onChange={handleChange}
                 />
                 <label
                   htmlFor="username"
@@ -40,6 +77,8 @@ export default function RegisterPage() {
                   type="email"
                   className="peer placeholder-transparent h-12 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-red-500"
                   placeholder="Email address"
+                  value={formData.email}
+                  onChange={handleChange}
                 />
                 <label
                   htmlFor="email"
@@ -56,6 +95,8 @@ export default function RegisterPage() {
                   type="password"
                   className="peer placeholder-transparent h-12 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-red-500"
                   placeholder="Password"
+                  value={formData.password}
+                  onChange={handleChange}
                 />
                 <label
                   htmlFor="password"
@@ -72,6 +113,8 @@ export default function RegisterPage() {
                   type="password"
                   className="peer placeholder-transparent h-12 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:border-red-500"
                   placeholder="Confirm Password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
                 />
                 <label
                   htmlFor="confirmPassword"
