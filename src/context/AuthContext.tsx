@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { AUTH_API } from "../api";
 
-const VITE_JWT_TOKEN_KEY = import.meta.env.VITE_JWT_TOKEN_KEY || "";
+const VITE_JWT_TOKEN_KEY = import.meta.env.VITE_JWT_TOKEN_KEY || "jwt_token";
 const VITE_AUTH_USER_KEY = import.meta.env.VITE_AUTH_USER_KEY || "";
 const USER_TYPE = import.meta.env.VITE_AUTH_USER_TYPE || "";
 
