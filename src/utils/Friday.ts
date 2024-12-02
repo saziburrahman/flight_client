@@ -9,9 +9,12 @@ interface IFridayOptions {
   showToast?: boolean;
 }
 
-// Create an Axios instance with a base URL
-const axiosInstance = axios.create({});
-// axios with friday
+const axiosInstance = axios.create({
+  baseURL: process.env.VITE_WRITE_BASE_URL || "",
+  withCredentials: true,
+});
+
+
 export default class Friday {
   static get(url: URL, options?: IFridayOptions) {
     return handleResponse(
@@ -79,7 +82,7 @@ export default class Friday {
   }
 }
 
-// errors handler
+// Errors handler
 const handleResponse = async (
   promise: Promise<any>,
   options?: IFridayOptions
